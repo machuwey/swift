@@ -23,7 +23,7 @@ start with lineas;
 lineas ::= linea lineas
          |linea;
 
-linea ::= obj PYC expresion
+linea ::= linea PYC expresion
         | expresion
         ;
 
