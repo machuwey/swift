@@ -1,7 +1,10 @@
-//Hola amigosfa
-1+2; print(1 + 3);
-//Hola
-/*Estoy 
-bien 
-1 + 4; print(1 + 5);
-*/
+print (1+2); // comentario en linea
+print (1+3); // comentario en linea /* sigue
+/* print (1+4); bloque 
+comentado */
+/*
+print (1+5); 
+/* print (1+6); bloque 
+comentado */
+print (1+7); // comentario en linea */ fash
+print (1+8); // comentario en linea

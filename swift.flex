@@ -4,6 +4,8 @@ import java_cup.runtime.*;
 
 %int
 %cup
+%line
+%column
 
 %%
 
@@ -39,7 +41,10 @@ import java_cup.runtime.*;
 "||"        { return new Symbol(sym.OR);    }
 "!"         { return new Symbol(sym.NO);    }
 
-(\/\*[\s\S]*?\*\/)|(\/\/).*\r|\n|\r\n {}
+
+
+(\/\*[\s\S]*?\*\/).\s*[\r|\n|\r\n]* {System.out.format("error en la linea %d",yyline);System.exit(0);}
+(\/\*[\s\S]*?\*\/)|(\/\/).*[\r|\n|\r\n]* {}
 
 
 
