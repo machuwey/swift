@@ -1,0 +1,8 @@
+var c = 1.0
+var d = 2.3
+var e = 3.4 + 5.6
+var f =  c * (d + e)
+var g = e * d + e
+print(e)
+print(f)
+print(g)

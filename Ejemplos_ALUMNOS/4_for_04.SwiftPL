@@ -1,0 +1,8 @@
+let base, exponente: Int
+base = 2
+exponente = 4
+var resultado = 1
+for _ in 1...exponente {
+    resultado = resultado * base
+}
+print(resultado)

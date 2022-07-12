@@ -1,0 +1,3 @@
+print (1+2); // comentario en linea
+/* print (1+3); bloque comentado */
+print (1+4); // comentario en linea

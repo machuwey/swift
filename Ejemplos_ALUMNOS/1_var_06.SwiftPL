@@ -1,0 +1,5 @@
+var a,b: Int
+let b : Int;
+a=4
+b=a*3
+print (a+b)

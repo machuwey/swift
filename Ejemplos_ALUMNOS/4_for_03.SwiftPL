@@ -1,0 +1,4 @@
+var enteros = [5,7,11]
+for index in 0...2 {
+    print(enteros[index])
+}

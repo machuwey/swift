@@ -1,0 +1,6 @@
+var implicitoInt = 1
+let implicitoDouble = 2.0
+let explicitoDouble:Double = 3
+print(implicitoInt)
+print(implicitoDouble)
+print(explicitoDouble)

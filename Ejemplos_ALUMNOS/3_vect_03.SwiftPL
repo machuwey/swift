@@ -1,0 +1,3 @@
+var numbers = [3,9,27]
+numbers[2] = 18
+print (numbers)

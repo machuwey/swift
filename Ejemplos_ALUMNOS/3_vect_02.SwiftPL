@@ -1,0 +1,2 @@
+var numbers = [3,9,27]
+print (numbers)

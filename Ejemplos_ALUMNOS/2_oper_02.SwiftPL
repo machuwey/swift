@@ -1,0 +1,4 @@
+let implicitoInt = 1
+let implicitoDouble = 2.0
+print(implicitoDouble)
+print(implicitoDouble /  implicitoInt )

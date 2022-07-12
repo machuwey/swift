@@ -1,0 +1,3 @@
+var a = true
+print(a)
+print(a || false)

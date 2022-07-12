@@ -1,0 +1,40 @@
+import java_cup.runtime.*;
+
+action code {::}
+/* TERMINALES */
+terminal    IF, ELSE, DO, WHILE, FOR, PRINT;        // Funciones del lenguaje
+terminal    EQ, NE, LT, LE, GT, GE, NO, AND, OR;    // Operadores lógicos
+terminal    SUM, RES, MUL, DIV, NEG, IGUAL;         // Operadores matemáticos
+terminal    AP, CP, AC, CC, AL, CL;                 // Aperturas y cierres
+terminal    PYC;                                    // Fin de línea
+terminal    String  VAR;
+terminal    Integer     NUM;
+
+non terminal lineas;
+non terminal linea;
+non terminal expresion;
+non terminal sentencia;
+
+precedence left SUM, RES;
+precedence left MUL, DIV;
+
+start with lineas;
+
+lineas ::= linea lineas
+         |linea;
+
+linea ::= obj PYC expresion
+        | expresion
+        ;
+
+
+sentencia ::= expresion PYC
+            | expresion 
+            ;
+
+expresion ::= PRINT AP expresion:e CP {:System.out.println(e);:}
+            | expresion:e SUM expresion:e2 {:RESULT = (Integer)e + (Integer)e2;:}
+            | NUM:e {:RESULT=e;:} 
+            ;
+
+
