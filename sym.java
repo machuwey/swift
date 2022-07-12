@@ -24,7 +24,8 @@ public class sym {
   public static final int GT = 12;
   public static final int LE = 11;
   public static final int AP = 23;
-  public static final int NUM = 31;
+  public static final int NUM = 32;
+  public static final int EOL = 30;
   public static final int DO = 4;
   public static final int AL = 27;
   public static final int EOF = 0;
@@ -37,7 +38,7 @@ public class sym {
   public static final int NO = 14;
   public static final int FOR = 6;
   public static final int MUL = 19;
-  public static final int VAR = 30;
+  public static final int VAR = 31;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -69,6 +70,7 @@ public class sym {
   "AL",
   "CL",
   "PYC",
+  "EOL",
   "VAR",
   "NUM"
   };

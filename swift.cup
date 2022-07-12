@@ -7,6 +7,7 @@ terminal    EQ, NE, LT, LE, GT, GE, NO, AND, OR;    // Operadores lógicos
 terminal    SUM, RES, MUL, DIV, NEG, IGUAL;         // Operadores matemáticos
 terminal    AP, CP, AC, CC, AL, CL;                 // Aperturas y cierres
 terminal    PYC;                                    // Fin de línea
+terminal    EOL;                           // Comentarios
 terminal    String  VAR;
 terminal    Integer     NUM;
 
@@ -14,23 +15,29 @@ non terminal lineas;
 non terminal linea;
 non terminal expresion;
 non terminal sentencia;
+non terminal endline;
 
 precedence left SUM, RES;
 precedence left MUL, DIV;
 
 start with lineas;
 
-lineas ::= linea lineas
+lineas ::= linea endline lineas
+         |linea endline
          |linea;
 
-linea ::= linea PYC expresion
-        | expresion
+endline ::= endline EOL
+          | endline PYC EOL {:System.out.println("error (sobra un ;)"); System.exit(0);:}
+          | EOL
+          ;
+
+linea ::= sentencia PYC
+        | sentencia
         ;
 
-
-sentencia ::= expresion PYC
-            | expresion 
-            ;
+sentencia ::= sentencia PYC expresion
+        | expresion
+        ;
 
 expresion ::= PRINT AP expresion:e CP {:System.out.println(e);:}
             | expresion:e SUM expresion:e2 {:RESULT = (Integer)e + (Integer)e2;:}

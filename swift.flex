@@ -39,6 +39,9 @@ import java_cup.runtime.*;
 "||"        { return new Symbol(sym.OR);    }
 "!"         { return new Symbol(sym.NO);    }
 
+(\/\*[\s\S]*?\*\/)|(\/\/).*\r|\n|\r\n {}
+
+
 
 // Operadores matemáticos
 "+"         { return new Symbol(sym.SUM);   }
@@ -57,7 +60,9 @@ import java_cup.runtime.*;
 [0-9]+                  { return new Symbol(sym.NUM, new Integer(yytext())); }
 [_a-zA-Z][_a-zA-Z0-9]*  { return new Symbol(sym.VAR, yytext()); }
 
+\r|\n|\r\n { return new Symbol(sym.EOL); }
 
 
 // Para todo lo demás
+[\s]*       { } //Ingonrorar espacios en blanco
 [^]         { }
