@@ -3,9 +3,9 @@ import java.util.*;
 action code {:
         Stack<String> identificadores = new Stack<String>();
 
-        public void inicializarVariables(Object valor, Integer tipo, int profundidad) {
+        public void inicializarVariables(Object valor, Integer tipo, int profundidad, Integer esGlobal, boolean asignado) {
                 for (String identificador : identificadores) {
-                        TablaSimbolos.add(identificador, valor, tipo, profundidad);
+                        TablaSimbolos.add(identificador, valor, tipo, profundidad, esGlobal, asignado);
                 }
                 identificadores.clear();
         }
@@ -60,9 +60,9 @@ expresion ::= PRINT AP expresion:e CP {:System.out.println(e);:}
             | expresion:e RES expresion:e2 {:RESULT = (Integer)e - (Integer)e2;:}
             | expresion:e MUL expresion:e2 {:RESULT = (Integer)e * (Integer)e2;:}
             | expresion:e DIV expresion:e2 {:RESULT = (Double)e  / (Double)e2;  :}
-            | varLet listaIdent tipo:v IGUAL expresion:e2 {: inicializarVariables(e2,0,v!=null?(Integer)v:0);:}
-            | varLet listaIdent tipo:v {: inicializarVariables(null,0,v!=null?(Integer)v:0);:}
-            | IDENT:e IGUAL expresion:e2 {: TablaSimbolos.replace(e, e2,0);:}
+            | varLet:g listaIdent tipo:v IGUAL expresion:e2 {: inicializarVariables(e2,0,v!=null?(Integer)v:0,(Integer)g, true);:}
+            | varLet:g listaIdent tipo:v {: inicializarVariables(null,0,v!=null?(Integer)v:0,(Integer)g, false);:}
+            | IDENT:e IGUAL expresion:e2 {: TablaSimbolos.replace(e, e2,0,true);:}
             | IDENT:e {:RESULT=TablaSimbolos.get(e);:}
             | NUM:e {:RESULT=e;:} 
             | DOUBLE:e {:RESULT=e;:}
@@ -77,8 +77,8 @@ listaIdent ::= listaIdent COMA IDENT:e {:identificadores.push(e);:}
               | IDENT:e {:RESULT=e;identificadores.push(e);:}
               ;
 
-varLet ::= VAR 
-        | LET
+varLet ::= VAR  {:RESULT=0;:}
+         | LET  {:RESULT=1;:}
         ;
 
 

@@ -172,9 +172,9 @@ class CUP$parser$actions {
 
         Stack<String> identificadores = new Stack<String>();
 
-        public void inicializarVariables(Object valor, Integer tipo, int profundidad) {
+        public void inicializarVariables(Object valor, Integer tipo, int profundidad, Integer esGlobal, boolean asignado) {
                 for (String identificador : identificadores) {
-                        TablaSimbolos.add(identificador, valor, tipo, profundidad);
+                        TablaSimbolos.add(identificador, valor, tipo, profundidad, esGlobal, asignado);
                 }
                 identificadores.clear();
         }
@@ -380,13 +380,16 @@ class CUP$parser$actions {
           case 16: // expresion ::= varLet listaIdent tipo IGUAL expresion 
             {
               Object RESULT =null;
+		int gleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int gright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		Object g = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		int vleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int vright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object v = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 inicializarVariables(e2,0,v!=null?(Integer)v:0);
+		 inicializarVariables(e2,0,v!=null?(Integer)v:0,(Integer)g, true);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expresion",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -395,10 +398,13 @@ class CUP$parser$actions {
           case 17: // expresion ::= varLet listaIdent tipo 
             {
               Object RESULT =null;
+		int gleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int gright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object g = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int vleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object v = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 inicializarVariables(null,0,v!=null?(Integer)v:0);
+		 inicializarVariables(null,0,v!=null?(Integer)v:0,(Integer)g, false);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expresion",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -413,7 +419,7 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 TablaSimbolos.replace(e, e2,0);
+		 TablaSimbolos.replace(e, e2,0,true);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expresion",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -509,7 +515,7 @@ class CUP$parser$actions {
           case 27: // varLet ::= VAR 
             {
               Object RESULT =null;
-
+		RESULT=0;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("varLet",7, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -518,7 +524,7 @@ class CUP$parser$actions {
           case 28: // varLet ::= LET 
             {
               Object RESULT =null;
-
+		RESULT=1;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("varLet",7, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
