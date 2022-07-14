@@ -19,6 +19,9 @@ import java_cup.runtime.*;
 
 "Double"    { return new Symbol(sym.DOUBLE_TYPE); }
 "Int"       { return new Symbol(sym.INT_TYPE);    }
+"Bool"      { return new Symbol(sym.BOOL_TYPE);   }
+"false"     { return new Symbol(sym.FALSE);       }
+"true"      { return new Symbol(sym.TRUE);        }
 
 
 // Aperturas y cierres
@@ -55,6 +58,8 @@ let\s+/[^a-zA-z][a-zA-Z_0-9]* { System.out.format("error");System.exit(0); }
 [0-9]+\.[0-9]+ { return new Symbol(sym.DOUBLE, new Double(yytext())); }
 ((var|let)\s+([_a-zA-Z][_a-zA-Z0-9]*)((:)\s*(Double|Int))?[^\s]*)/= { System.out.format("error");System.exit(0); }
 ((var|let)\s+([_a-zA-Z][_a-zA-Z0-9]*)((:)\s*(Double|Int))?[^\s]*)=/[^\s] { System.out.format("error");System.exit(0); }
+[-+*:]\s+/\*[0-9]+ { System.out.format("error");System.exit(0); }
+
 
 
 

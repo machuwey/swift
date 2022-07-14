@@ -1,1 +1,1 @@
-instead expected token classes are []
+instead expected token classes are [BOOL_TYPE]

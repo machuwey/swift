@@ -1,5 +1,5 @@
-var a,b: Int
-let b : Int;
-a=4
-b=a*3
-print (a+b)
+var x, y, z: Double
+x = 2; y = 4; z = 8
+var a: Bool ;
+a = (z / y) == x
+print (a)

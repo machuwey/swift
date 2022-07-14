@@ -9,6 +9,7 @@ action code {:
                 }
                 identificadores.clear();
         }
+       
 :}
 /* TERMINALES */
 terminal    IF, ELSE, DO, WHILE, FOR, PRINT;        // Funciones del lenguaje
@@ -21,7 +22,8 @@ terminal    String  IDENT;
 terminal    Integer     NUM;
 terminal    Double     DOUBLE;
 terminal    VAR,LET;
-terminal    DOUBLE_TYPE, INT_TYPE;
+terminal    TRUE,FALSE;
+terminal    DOUBLE_TYPE, INT_TYPE, BOOL_TYPE;
 
 
 non terminal lineas;
@@ -32,9 +34,17 @@ non terminal endline;
 non terminal tipo;
 non terminal listaIdent;
 non terminal varLet;
+non terminal array;
 
 precedence left SUM, RES;
 precedence left MUL, DIV;
+precedence left EQ, LE, GE;
+precedence left NE, LT, GT;
+precedence left NO, AND, OR;
+
+precedence  nonassoc    AP, CP;
+precedence  nonassoc    AC, CC;
+precedence  nonassoc    AL, CL;
 
 start with lineas;
 
@@ -56,20 +66,36 @@ sentencia ::= sentencia PYC expresion
         ;
 
 expresion ::= PRINT AP expresion:e CP {:System.out.println(e);:}
-            | expresion:e SUM expresion:e2 {:RESULT = (Integer)e + (Integer)e2;:}
-            | expresion:e RES expresion:e2 {:RESULT = (Integer)e - (Integer)e2;:}
-            | expresion:e MUL expresion:e2 {:RESULT = (Integer)e * (Integer)e2;:}
-            | expresion:e DIV expresion:e2 {:RESULT = (Double)e  / (Double)e2;  :}
+            | expresion:e SUM expresion:e2 {:RESULT = operations.sumar(e, e2);:}
+            | expresion:e RES expresion:e2 {:RESULT = operations.restar(e, e2);:}
+            | expresion:e MUL expresion:e2 {:RESULT = operations.multiplicar(e, e2);:}
+            | expresion:e DIV expresion:e2 {:RESULT = operations.dividir(e, e2);:}
+            | expresion:e OR expresion:e2 {:RESULT = ((boolean)e || (boolean)e2);:}
+            | expresion:e AND expresion:e2 {:RESULT = ((boolean)e && (boolean)e2);:}
+            | expresion:e EQ expresion:e2 {:RESULT = operations.eq(e, e2);:}
+            | expresion:e NE expresion:e2 {:RESULT = (e != e2);:}
+            | expresion:e LT expresion:e2 {:RESULT = operations.lt(e, e2);:}
+            | expresion:e LE expresion:e2 {:RESULT = operations.le(e, e2);:}
+            | expresion:e GT expresion:e2 {:RESULT = operations.gt(e, e2);:}
+            | expresion:e GE expresion:e2 {:RESULT = operations.ge(e, e2);:}
             | varLet:g listaIdent tipo:v IGUAL expresion:e2 {: inicializarVariables(e2,0,v!=null?(Integer)v:0,(Integer)g, true);:}
             | varLet:g listaIdent tipo:v {: inicializarVariables(null,0,v!=null?(Integer)v:0,(Integer)g, false);:}
             | IDENT:e IGUAL expresion:e2 {: TablaSimbolos.replace(e, e2,0,true);:}
+            | AP expresion:e CP {: RESULT = e;:}
             | IDENT:e {:RESULT=TablaSimbolos.get(e);:}
+            | NO IDENT:e {:RESULT=!(boolean)TablaSimbolos.get(e);:}
+            | FALSE {:RESULT=false;:}
+            | TRUE {:RESULT=true;:}
+       //     | AC array CC {::}
             | NUM:e {:RESULT=e;:} 
             | DOUBLE:e {:RESULT=e;:}
+            | RES NUM:e {:RESULT=-e;:} 
+            | RES DOUBLE:e {:RESULT=-e;:}
             ;
 
 tipo ::= PP DOUBLE_TYPE {:RESULT=1;:}
         |PP INT_TYPE {:RESULT=2;:}
+        |PP BOOL_TYPE {:RESULT=3;:}
         |
         ;
 
@@ -80,6 +106,11 @@ listaIdent ::= listaIdent COMA IDENT:e {:identificadores.push(e);:}
 varLet ::= VAR  {:RESULT=0;:}
          | LET  {:RESULT=1;:}
         ;
+/*
+array ::= expresion:e COMA array:a {:RESULT=new ArrayList<Object>();RESULT.add(e);RESULT.addAll(a);:}
+        | expresion:e {:RESULT=new ArrayList<Object>();RESULT.add(e);:}
+        ;
+*/
 
 
 
