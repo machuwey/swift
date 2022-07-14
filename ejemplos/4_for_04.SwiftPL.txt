@@ -1,0 +1,1 @@
+instead expected token classes are [EOF, RES, MUL, DIV, IGUAL, PYC, PP, EOL]

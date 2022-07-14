@@ -6,39 +6,46 @@
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int AND = 15;
-  public static final int RES = 18;
-  public static final int LT = 10;
-  public static final int NE = 9;
-  public static final int CP = 24;
-  public static final int ELSE = 3;
-  public static final int PYC = 29;
-  public static final int NEG = 21;
-  public static final int IGUAL = 22;
-  public static final int OR = 16;
-  public static final int CL = 28;
-  public static final int WHILE = 5;
-  public static final int SUM = 17;
-  public static final int IF = 2;
-  public static final int CC = 26;
-  public static final int GT = 12;
-  public static final int LE = 11;
-  public static final int AP = 23;
-  public static final int NUM = 32;
-  public static final int EOL = 30;
-  public static final int DO = 4;
-  public static final int AL = 27;
-  public static final int EOF = 0;
-  public static final int DIV = 20;
+  public static final int PP = 30;
   public static final int AC = 25;
   public static final int GE = 13;
-  public static final int PRINT = 7;
-  public static final int error = 1;
-  public static final int EQ = 8;
-  public static final int NO = 14;
+  public static final int RES = 18;
+  public static final int DOUBLE = 35;
   public static final int FOR = 6;
+  public static final int CP = 24;
+  public static final int AND = 15;
+  public static final int IGUAL = 22;
+  public static final int LT = 10;
+  public static final int CL = 28;
+  public static final int OR = 16;
+  public static final int DIV = 20;
+  public static final int NUM = 34;
+  public static final int EOL = 32;
+  public static final int CC = 26;
+  public static final int IF = 2;
+  public static final int LE = 11;
+  public static final int EOF = 0;
+  public static final int error = 1;
   public static final int MUL = 19;
-  public static final int VAR = 31;
+  public static final int COMA = 31;
+  public static final int INT_TYPE = 39;
+  public static final int IDENT = 33;
+  public static final int DOUBLE_TYPE = 38;
+  public static final int EQ = 8;
+  public static final int NEG = 21;
+  public static final int NO = 14;
+  public static final int ELSE = 3;
+  public static final int WHILE = 5;
+  public static final int LET = 37;
+  public static final int NE = 9;
+  public static final int SUM = 17;
+  public static final int AP = 23;
+  public static final int GT = 12;
+  public static final int VAR = 36;
+  public static final int PRINT = 7;
+  public static final int DO = 4;
+  public static final int AL = 27;
+  public static final int PYC = 29;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -70,9 +77,16 @@ public class sym {
   "AL",
   "CL",
   "PYC",
+  "PP",
+  "COMA",
   "EOL",
+  "IDENT",
+  "NUM",
+  "DOUBLE",
   "VAR",
-  "NUM"
+  "LET",
+  "DOUBLE_TYPE",
+  "INT_TYPE"
   };
 }
 

@@ -17,6 +17,9 @@ import java_cup.runtime.*;
 "for"       { return new Symbol(sym.FOR);   }
 "print"     { return new Symbol(sym.PRINT); }
 
+"Double"    { return new Symbol(sym.DOUBLE_TYPE); }
+"Int"       { return new Symbol(sym.INT_TYPE);    }
+
 
 // Aperturas y cierres
 "("         { return new Symbol(sym.AP);    }
@@ -42,9 +45,17 @@ import java_cup.runtime.*;
 "!"         { return new Symbol(sym.NO);    }
 
 
-
+//Cosas adicionales y control errores
 (\/\*[\s\S]*?\*\/).\s*[\r|\n|\r\n]* {System.out.format("error");System.exit(0);}
 (\/\*[\s\S]*?\*\/)|(\/\/).*[\r|\n|\r\n]* {}
+";)"        { System.out.format("error");System.exit(0); }
+"var"       { return new Symbol(sym.VAR);   }
+"let"       { return new Symbol(sym.LET);   }
+let\s+/[^a-zA-z][a-zA-Z_0-9]* { System.out.format("error");System.exit(0); }
+[0-9]+\.[0-9]+ { return new Symbol(sym.DOUBLE, new Double(yytext())); }
+((var|let)\s+([_a-zA-Z][_a-zA-Z0-9]*)((:)\s*(Double|Int))?[^\s]*)/= { System.out.format("error");System.exit(0); }
+=/[^\s] { System.out.format("error");System.exit(0); }
+[^\s]/=[^\s] { System.out.format("error");System.exit(0); }
 
 
 
@@ -59,11 +70,13 @@ import java_cup.runtime.*;
 
 // Fin de sentencia
 ";"         { return new Symbol(sym.PYC);   }
+":"         { return new Symbol(sym.PP);   }
+","         { return new Symbol(sym.COMA);   }
 
 
 // Valores
 [0-9]+                  { return new Symbol(sym.NUM, new Integer(yytext())); }
-[_a-zA-Z][_a-zA-Z0-9]*  { return new Symbol(sym.VAR, yytext()); }
+[_a-zA-Z][_a-zA-Z0-9]*  { return new Symbol(sym.IDENT, yytext()); }
 
 \r|\n|\r\n { return new Symbol(sym.EOL); }
 

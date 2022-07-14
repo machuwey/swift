@@ -6,16 +6,23 @@ terminal    IF, ELSE, DO, WHILE, FOR, PRINT;        // Funciones del lenguaje
 terminal    EQ, NE, LT, LE, GT, GE, NO, AND, OR;    // Operadores lógicos
 terminal    SUM, RES, MUL, DIV, NEG, IGUAL;         // Operadores matemáticos
 terminal    AP, CP, AC, CC, AL, CL;                 // Aperturas y cierres
-terminal    PYC;                                    // Fin de línea
+terminal    PYC, PP, COMA;                                  // Fin de línea
 terminal    EOL;                           // Comentarios
-terminal    String  VAR;
+terminal    String  IDENT;
 terminal    Integer     NUM;
+terminal    Double     DOUBLE;
+terminal    VAR,LET;
+terminal    DOUBLE_TYPE, INT_TYPE;
+
 
 non terminal lineas;
 non terminal linea;
 non terminal expresion;
 non terminal sentencia;
 non terminal endline;
+non terminal tipo;
+non terminal listaIdent;
+non terminal varLet;
 
 precedence left SUM, RES;
 precedence left MUL, DIV;
@@ -27,7 +34,7 @@ lineas ::= linea endline lineas
          |linea;
 
 endline ::= endline EOL
-          | endline PYC EOL {:System.out.println("error (sobra un ;)"); System.exit(0);:}
+          | endline PYC EOL {:System.out.println("error"); System.exit(0);:}
           | EOL
           ;
 
@@ -41,7 +48,29 @@ sentencia ::= sentencia PYC expresion
 
 expresion ::= PRINT AP expresion:e CP {:System.out.println(e);:}
             | expresion:e SUM expresion:e2 {:RESULT = (Integer)e + (Integer)e2;:}
+            | expresion:e RES expresion:e2 {:RESULT = (Integer)e - (Integer)e2;:}
+            | expresion:e MUL expresion:e2 {:RESULT = (Integer)e * (Integer)e2;:}
+            | expresion:e DIV expresion:e2 {:RESULT = (Double)e  / (Double)e2;  :}
+            | VAR IDENT:e tipo:v IGUAL expresion:e2 {: TablaSimbolos.add(e, e2,0,v!=null?(Integer)v:0);:}
+            | LET IDENT:e tipo:v IGUAL expresion:e2 {: TablaSimbolos.add(e, e2,0,v!=null?(Integer)v:0);:}
+            | LET IDENT:e tipo:v {: TablaSimbolos.add(e, null,0,v!=null?(Integer)v:0);:}
+            | VAR listaIdent:e tipo:v {: TablaSimbolos.add(e, null,0,v!=null?(Integer)v:0);:}
+            | IDENT:e IGUAL expresion:e2 {: TablaSimbolos.replace(e, e2,0);:}
+            | IDENT:e {:RESULT=TablaSimbolos.get(e);:}
             | NUM:e {:RESULT=e;:} 
+            | DOUBLE:e {:RESULT=e;:}
             ;
+
+tipo ::= PP DOUBLE_TYPE {:RESULT=1;:}
+        |PP INT_TYPE {:RESULT=2;:}
+        |
+        ;
+
+listaIdent ::= listaIdent COMA IDENT:e {:RESULT=e;:}
+              | IDENT:e {:RESULT=e;:}
+              ;
+
+
+
 
 
