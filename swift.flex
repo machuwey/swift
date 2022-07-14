@@ -54,8 +54,8 @@ import java_cup.runtime.*;
 let\s+/[^a-zA-z][a-zA-Z_0-9]* { System.out.format("error");System.exit(0); }
 [0-9]+\.[0-9]+ { return new Symbol(sym.DOUBLE, new Double(yytext())); }
 ((var|let)\s+([_a-zA-Z][_a-zA-Z0-9]*)((:)\s*(Double|Int))?[^\s]*)/= { System.out.format("error");System.exit(0); }
-=/[^\s] { System.out.format("error");System.exit(0); }
-[^\s]/=[^\s] { System.out.format("error");System.exit(0); }
+((var|let)\s+([_a-zA-Z][_a-zA-Z0-9]*)((:)\s*(Double|Int))?[^\s]*)=/[^\s] { System.out.format("error");System.exit(0); }
+
 
 
 
