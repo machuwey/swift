@@ -1,1 +1,1 @@
-instead expected token classes are [RES, AP, IDENT, NUM, DOUBLE, VAR, LET, TRUE, FALSE]
+[3, 9, 27]

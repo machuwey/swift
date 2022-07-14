@@ -34,7 +34,8 @@ non terminal endline;
 non terminal tipo;
 non terminal listaIdent;
 non terminal varLet;
-non terminal array;
+non terminal ArrayList<Object> array;
+non terminal objetos_finales;
 
 precedence left SUM, RES;
 precedence left MUL, DIV;
@@ -83,19 +84,26 @@ expresion ::= PRINT AP expresion:e CP {:System.out.println(e);:}
             | IDENT:e IGUAL expresion:e2 {: TablaSimbolos.replace(e, e2,0,true);:}
             | AP expresion:e CP {: RESULT = e;:}
             | IDENT:e {:RESULT=TablaSimbolos.get(e);:}
-            | NO IDENT:e {:RESULT=!(boolean)TablaSimbolos.get(e);:}
-            | FALSE {:RESULT=false;:}
-            | TRUE {:RESULT=true;:}
-       //     | AC array CC {::}
-            | NUM:e {:RESULT=e;:} 
-            | DOUBLE:e {:RESULT=e;:}
-            | RES NUM:e {:RESULT=-e;:} 
-            | RES DOUBLE:e {:RESULT=-e;:}
+            | NO IDENT:e {:RESULT=!(boolean)TablaSimbolos.get(e);:}   
+            | AC array:a CC {:RESULT=a;:}
+            | IDENT:e AC NUM:n CC {:ArrayList<Object> a = (ArrayList)TablaSimbolos.get(e); RESULT=a.get(n);:}
+            | IDENT:e AC NUM:n CC IGUAL expresion:o {:TablaSimbolos.modifyArray(e, n, o);:}
+            | objetos_finales:e {:RESULT=e;:}
             ;
 
+objetos_finales ::=  NUM:e {:RESULT=e;:} 
+                  | DOUBLE:e {:RESULT=e;:}
+                  | RES NUM:e {:RESULT=-e;:} 
+                  | RES DOUBLE:e {:RESULT=-e;:}
+                  | FALSE {:RESULT=false;:}
+                  | TRUE {:RESULT=true;:}
+                  ;
 tipo ::= PP DOUBLE_TYPE {:RESULT=1;:}
         |PP INT_TYPE {:RESULT=2;:}
         |PP BOOL_TYPE {:RESULT=3;:}
+        |PP AC DOUBLE_TYPE CC {:RESULT=1;:}
+        |PP AC INT_TYPE CC {:RESULT=2;:}
+        |PP AC BOOL_TYPE CC {:RESULT=3;:}
         |
         ;
 
@@ -105,12 +113,12 @@ listaIdent ::= listaIdent COMA IDENT:e {:identificadores.push(e);:}
 
 varLet ::= VAR  {:RESULT=0;:}
          | LET  {:RESULT=1;:}
+         ;
+
+array ::= objetos_finales:e COMA array:a {:ArrayList<Object> aux =new ArrayList<Object>();aux.add(e);aux.addAll(a);RESULT=aux;:}
+        | objetos_finales:e {:ArrayList<Object> aux =new ArrayList<Object>();aux.add(e);RESULT=aux;:}
         ;
-/*
-array ::= expresion:e COMA array:a {:RESULT=new ArrayList<Object>();RESULT.add(e);RESULT.addAll(a);:}
-        | expresion:e {:RESULT=new ArrayList<Object>();RESULT.add(e);:}
-        ;
-*/
+
 
 
 

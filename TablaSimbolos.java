@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -11,7 +12,15 @@ public class TablaSimbolos {
         boolean esConstante = false;
         
         if (valor != null && tipo==1){
-            valor = Double.parseDouble(valor.toString());
+           //If valor is an array loop and cast each element to Double
+           if( valor instanceof ArrayList){
+               ArrayList<Object> array = (ArrayList<Object>) valor;
+               for(int i=0; i<array.size(); i++){
+                   array.set(i, Double.parseDouble(array.get(i).toString()));
+               }}else{
+                valor = Double.parseDouble(valor.toString());
+               }
+            
         }
         if (valor != null && tipo==2){
             valor = Integer.parseInt(valor.toString());
@@ -70,5 +79,25 @@ public class TablaSimbolos {
         }
     }
 
+    public static void modifyArray(String name, int index, Object valor) {
+        if (tablaSimbolos.containsKey(name)) {
+            if (tablaSimbolos.get(name).getValor() instanceof ArrayList) {
+                ArrayList<Object> array = (ArrayList<Object>) tablaSimbolos.get(name).getValor();
+                //Check if not out of bounds
+                if (index < array.size()) {
+                    array.set(index, valor);
+                } else {
+                    System.out.println("error");
+                    System.exit(0);
+                }
+            } else {
+                System.out.println("error");
+                System.exit(0);
+            }
+        } else {
+            System.out.println("error");
+            System.exit(0);
+        }
+    }
     
 }

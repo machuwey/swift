@@ -25,7 +25,9 @@ public static Object multiplicar(Object valor1, Object valor2) {
         } else if (valor1 instanceof Double && valor2 instanceof Double) {
                 return (Double) valor1 * (Double) valor2;
         } else {
-                return null;
+            System.out.println("error");
+            System.exit(0);
+            return null;  
         }
 }
 public static Object dividir(Object valor1, Object valor2) {

@@ -1,1 +1,1 @@
-instead expected token classes are [BOOL_TYPE]
+[3.0, 9.0, 81.0]

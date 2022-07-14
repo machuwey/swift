@@ -1,5 +1,6 @@
-var x, y, z: Double
-x = 2; y = 4; z = 8
-var a: Bool ;
-a = (z / y) == x
-print (a)
+var implicitoInt = 1
+let implicitoDouble = 2.0
+let explicitoDouble:Double = 3
+print(implicitoInt)
+print(implicitoDouble)
+print(explicitoDouble)
