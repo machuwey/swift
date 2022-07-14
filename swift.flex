@@ -22,7 +22,7 @@ import java_cup.runtime.*;
 "Bool"      { return new Symbol(sym.BOOL_TYPE);   }
 "false"     { return new Symbol(sym.FALSE);       }
 "true"      { return new Symbol(sym.TRUE);        }
-
+"in"        { return new Symbol(sym.IN);          }
 
 // Aperturas y cierres
 "("         { return new Symbol(sym.AP);    }

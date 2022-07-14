@@ -1,6 +1,5 @@
-var implicitoInt = 1
-let implicitoDouble = 2.0
-let explicitoDouble:Double = 3
-print(implicitoInt)
-print(implicitoDouble)
-print(explicitoDouble)
+var enteros = [5,7,11]
+for numero in enteros
+{
+ print (numero)
+}

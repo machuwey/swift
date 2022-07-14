@@ -2,6 +2,7 @@ import java_cup.runtime.*;
 import java.util.*;
 action code {:
         Stack<String> identificadores = new Stack<String>();
+        public Boolean esFor = false;
 
         public void inicializarVariables(Object valor, Integer tipo, int profundidad, Integer esGlobal, boolean asignado) {
                 for (String identificador : identificadores) {
@@ -9,7 +10,18 @@ action code {:
                 }
                 identificadores.clear();
         }
-       
+       public void imprimir(Object e){
+       if (esFor && e instanceof ArrayList ){
+       for (Object o : (ArrayList)e){
+         System.out.println(o);
+         }
+         }else{
+            System.out.println(e);
+            }
+            esFor = false;
+        }
+
+
 :}
 /* TERMINALES */
 terminal    IF, ELSE, DO, WHILE, FOR, PRINT;        // Funciones del lenguaje
@@ -24,7 +36,7 @@ terminal    Double     DOUBLE;
 terminal    VAR,LET;
 terminal    TRUE,FALSE;
 terminal    DOUBLE_TYPE, INT_TYPE, BOOL_TYPE;
-
+terminal    IN; //Para el bucle for
 
 non terminal lineas;
 non terminal linea;
@@ -36,6 +48,8 @@ non terminal listaIdent;
 non terminal varLet;
 non terminal ArrayList<Object> array;
 non terminal objetos_finales;
+non terminal sentencia_for;
+non terminal uwu;
 
 precedence left SUM, RES;
 precedence left MUL, DIV;
@@ -60,13 +74,14 @@ endline ::= endline EOL
 
 linea ::= sentencia PYC
         | sentencia
+        | sentencia_for
         ;
 
 sentencia ::= sentencia PYC expresion
         | expresion
         ;
 
-expresion ::= PRINT AP expresion:e CP {:System.out.println(e);:}
+expresion ::= PRINT AP expresion:e CP {:imprimir(e);:}
             | expresion:e SUM expresion:e2 {:RESULT = operations.sumar(e, e2);:}
             | expresion:e RES expresion:e2 {:RESULT = operations.restar(e, e2);:}
             | expresion:e MUL expresion:e2 {:RESULT = operations.multiplicar(e, e2);:}
@@ -119,7 +134,18 @@ array ::= objetos_finales:e COMA array:a {:ArrayList<Object> aux =new ArrayList<
         | objetos_finales:e {:ArrayList<Object> aux =new ArrayList<Object>();aux.add(e);RESULT=aux;:}
         ;
 
+sentencia_for ::= FOR {: esFor = true;:}
+                  IDENT:i 
+                  IN IDENT:a {:TablaSimbolos.add(i,(ArrayList)TablaSimbolos.get(a),0,99,0,false);:}
+                  uwu
+                  AL
+                  uwu
+                  linea
+                  CL
+                  ;
 
-
+uwu ::= EOL
+        |
+        ;
 
 

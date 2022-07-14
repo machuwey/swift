@@ -18,6 +18,7 @@ public class sym {
   public static final int IGUAL = 22;
   public static final int LT = 10;
   public static final int CL = 28;
+  public static final int IN = 43;
   public static final int OR = 16;
   public static final int DIV = 20;
   public static final int NUM = 34;
@@ -92,7 +93,8 @@ public class sym {
   "FALSE",
   "DOUBLE_TYPE",
   "INT_TYPE",
-  "BOOL_TYPE"
+  "BOOL_TYPE",
+  "IN"
   };
 }
 

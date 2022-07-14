@@ -99,5 +99,26 @@ public class TablaSimbolos {
             System.exit(0);
         }
     }
+    public static Object getAtArray(String name, int index) {
+        if (tablaSimbolos.containsKey(name)) {
+            if (tablaSimbolos.get(name).getValor() instanceof ArrayList) {
+                ArrayList<Object> array = (ArrayList<Object>) tablaSimbolos.get(name).getValor();
+                //Check if not out of bounds
+                if (index < array.size()) {
+                    return array.get(index);
+                } else {
+                    System.out.println("error");
+                    System.exit(0);
+                }
+            } else {
+                System.out.println("error");
+                System.exit(0);
+            }
+        } else {
+            System.out.println("error");
+            System.exit(0);
+        }
+        return null;
+    }
     
 }
