@@ -43,7 +43,7 @@ import java_cup.runtime.*;
 
 
 
-(\/\*[\s\S]*?\*\/).\s*[\r|\n|\r\n]* {System.out.format("error en la linea %d",yyline);System.exit(0);}
+(\/\*[\s\S]*?\*\/).\s*[\r|\n|\r\n]* {System.out.format("error");System.exit(0);}
 (\/\*[\s\S]*?\*\/)|(\/\/).*[\r|\n|\r\n]* {}
 
 
@@ -69,5 +69,4 @@ import java_cup.runtime.*;
 
 
 // Para todo lo demás
-[\s]*       { } //Ingonrorar espacios en blanco
 [^]         { }
