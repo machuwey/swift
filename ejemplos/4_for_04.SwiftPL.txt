@@ -1,1 +1,1 @@
-instead expected token classes are [EOF, RES, MUL, DIV, IGUAL, PYC, PP, EOL]
+instead expected token classes are [EOF, PYC, EOL, IDENT, NUM, DOUBLE, VAR, LET]
