@@ -20,15 +20,19 @@ do
     diff -w $file.txt ${file%.SwiftPL}_salida.txt 
     if [ $? -eq 0 ]
     then
-        echo "Test passed"
+        echo "Test passed✔"
         SUCCESS=$((SUCCESS+1))
     else
-        echo "Test failed"
+        echo "Test failed❌"
         FAIL=$((FAIL+1))
     fi 
 done
 
+echo "------------------------------------------------------"
 echo "Tests passed: $SUCCESS"
 echo "Tests failed: $FAIL"
+echo "Success rate: $(($SUCCESS*100/$(($SUCCESS+$FAIL))))%"
+echo "------------------------------------------------------"
+
 
 $SHELL
