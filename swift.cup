@@ -48,7 +48,7 @@ non terminal listaIdent;
 non terminal varLet;
 non terminal ArrayList<Object> array;
 non terminal objetos_finales;
-non terminal sentencia_for;
+non terminal sentencia_for, for_header;
 non terminal uwu;
 
 precedence left SUM, RES;
@@ -134,17 +134,20 @@ array ::= objetos_finales:e COMA array:a {:ArrayList<Object> aux =new ArrayList<
         | objetos_finales:e {:ArrayList<Object> aux =new ArrayList<Object>();aux.add(e);RESULT=aux;:}
         ;
 
-sentencia_for ::= FOR {: esFor = true;:}
-                  IDENT:i 
-                  IN IDENT:a {:TablaSimbolos.add(i,(ArrayList)TablaSimbolos.get(a),0,99,0,false);:}
+sentencia_for ::= for_header:i
                   uwu
                   AL
                   uwu
                   linea
-                  CL
+                  uwu
+                  CL {:TablaSimbolos.borrar((String)i);:}
                   ;
 
-uwu ::= EOL
+for_header ::= FOR {: esFor = true;:}
+                IDENT:i 
+                IN IDENT:a {:RESULT=i;TablaSimbolos.add(i,(ArrayList)TablaSimbolos.get(a),0,99,0,true);:}
+                ;
+uwu ::= EOL    
         |
         ;
 

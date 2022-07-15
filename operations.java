@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class operations {
     public static Object sumar(Object valor1, Object valor2) {
         if (valor1 instanceof Integer && valor2 instanceof Integer) {
@@ -6,6 +8,10 @@ public class operations {
                 return (Double) valor1 + (Double) valor2;
         } else if (valor1 instanceof String && valor2 instanceof String) {
                 return (String) valor1 + (String) valor2;
+        } else if (valor1 instanceof ArrayList && valor2 instanceof ArrayList) {
+                ArrayList<Object> array = (ArrayList<Object>) valor1;
+                array.addAll((ArrayList<Object>) valor2);
+                return array;
         } else {
                 return null;
         }

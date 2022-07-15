@@ -1,5 +1,5 @@
 var enteros = [5,7,11]
 for numero in enteros
 {
- print (numero)
+ print (numero);
 }

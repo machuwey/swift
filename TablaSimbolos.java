@@ -78,6 +78,9 @@ public class TablaSimbolos {
             return null;
         }
     }
+    public static void borrar(String nombre){
+        tablaSimbolos.remove(nombre);
+    }
 
     public static void modifyArray(String name, int index, Object valor) {
         if (tablaSimbolos.containsKey(name)) {
